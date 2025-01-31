@@ -16,17 +16,9 @@
       >
         <div
           v-for="game in games"
-          :key="game.id"
+          :key="game.title"
           class="bg-gray-800/50 rounded-lg overflow-hidden hover:bg-gray-700/50 transition-all duration-300 transform group"
-          :class="{
-            'border-2 border-purple-500': selectedGame?.id === game.id,
-          }"
         >
-          <img
-            :src="game.image"
-            :alt="game.title"
-            class="w-full h-48 object-cover"
-          />
           <div class="p-4">
             <h2 class="text-xl font-semibold text-white mb-2">
               {{ game.title }}
@@ -177,56 +169,46 @@
 <script setup>
 import { ref, watch } from "vue";
 
-const games = [
-  {
-    id: 1,
-    title: "The Legend of Zelda: TOTK",
-    description: "Une aventure épique dans un monde ouvert fantastique.",
-    image:
-      "https://fs-prod-cdn.nintendo-europe.com/media/images/10_share_images/games_15/nintendo_switch_4/2x1_NSwitch_TheLegendOfZeldaTearsOfTheKingdom_Gamepage.jpg",
-    details: [
-      "🎮 Genre: Action-Aventure",
-      "🌍 Monde ouvert",
-      "⚔️ Combat dynamique",
-      "🏰 Donjons complexes",
-      "🎨 Direction artistique unique",
-    ],
-  },
-  {
-    id: 2,
-    title: "Cyberpunk 2077",
-    description: "Un RPG futuriste dans une mégalopole dystopique.",
-    image:
-      "https://cdn1.epicgames.com/offer/77f2b98e2cef40c8a7437518bf420e47/EGS_Cyberpunk2077_CDPROJEKTRED_S1_03_2560x1440-359b77d6529079a87e6100b49cc1417c",
-    details: [
-      "🎮 Genre: RPG",
-      "🌆 Night City",
-      "🤖 Implants cybernétiques",
-      "🔫 Combat immersif",
-      "📱 Hacking avancé",
-    ],
-  },
-  {
-    id: 3,
-    title: "Elden Ring",
-    description: "Un action-RPG dans un univers dark fantasy.",
-    image:
-      "https://image.api.playstation.com/vulcan/ap/rnd/202110/2000/phvVT0qZfcRms5qDAk0SI3CM.png",
-    details: [
-      "🎮 Genre: Action-RPG",
-      "🗺️ Entre-Terre",
-      "⚔️ Combat exigeant",
-      "🐎 Monde ouvert à cheval",
-      "🏰 Châteaux légendaires",
-    ],
-  },
-];
-
 const selectedGame = ref(null);
 const messages = ref([]);
 const userInput = ref("");
 const chatContainer = ref(null);
 const isLoading = ref(false);
+
+const games = [
+  {
+    title: "Jeu 8 Américains",
+    description:
+      'Recréation du jeu de cartes "8 Américains" en utilisant Lua et LÖVE 2D. Permet de 2 à 7 joueurs, avec une interface intuitive et un système de gestion des tours.',
+    details: [
+      "🎮 Genre: Jeu de cartes",
+      "🃏 Règles classiques",
+      "🖥️ Interface utilisateur intuitive",
+    ],
+  },
+  {
+    title: "Jeu Pong",
+    description:
+      "Reprise du classique Pong en 2D. Inclut un mode solo avec IA ajustable et un mode multijoueur, tout en respectant le gameplay original.",
+    details: ["🎮 Genre: Arcade", "🤖 IA ajustable", "👥 Mode multijoueur"],
+  },
+  {
+    title: "Jeu Tetris",
+    description:
+      "Recréation de Tetris avec des graphismes simples et colorés, un gameplay fluide, un système de score et une difficulté progressive.",
+    details: [
+      "🎮 Genre: Puzzle",
+      "📈 Système de score",
+      "🔼 Difficulté progressive",
+    ],
+  },
+  {
+    title: "Jeu Snake",
+    description:
+      "Recréation du classique Snake, où le joueur contrôle un serpent qui grandit en mangeant des pommes tout en évitant de se heurter aux murs ou à lui-même.",
+    details: ["🎮 Genre: Arcade", "🍏 Manger des pommes", "🚧 Éviter les murs"],
+  },
+];
 
 const selectGame = (game) => {
   selectedGame.value = game;

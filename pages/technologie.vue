@@ -11,6 +11,11 @@
           <li>• Nuxt 3</li>
           <li>• Tailwind CSS</li>
           <li>• Intelligence Artificielle</li>
+
+          <li>• Lua</li>
+          <li>• Love2D</li>
+          <li>• Unity</li>
+          <li>• Blender</li>
         </ul>
       </div>
     </div>

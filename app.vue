@@ -12,7 +12,7 @@
         <h1
           class="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 hover:from-pink-500 hover:to-purple-500 transition-all duration-500"
         >
-          L Game Store
+          L-Game Store
         </h1>
         <nav class="mt-4 space-x-6">
           <NuxtLink
@@ -183,8 +183,25 @@ body {
 }
 
 /* Styles de navigation */
-.router-link-active {
-  @apply text-purple-500;
+header {
+  @apply bg-black/90 shadow-lg; /* Augmenter la transparence pour un meilleur contraste */
+}
+
+nav {
+  @apply flex items-center justify-between p-4; /* Ajout de padding pour un meilleur espacement */
+}
+
+nav a {
+  @apply text-white hover:text-purple-400 transition-colors duration-300 font-medium px-4 py-2 rounded-lg; /* Coins arrondis plus prononcés */
+}
+
+nav a:hover {
+  @apply bg-purple-600 bg-opacity-50 transform scale-105; /* Effet de zoom et fond semi-transparent au survol */
+}
+
+/* Ajout d'un style pour les icônes de navigation */
+nav a i {
+  @apply mr-2; /* Espacement entre l'icône et le texte */
 }
 
 /* Animation du gradient */
@@ -203,5 +220,43 @@ body {
   100% {
     background-position: 0% 50%;
   }
+}
+
+/* Ajout de styles pour rendre le design plus réactif */
+@media (max-width: 640px) {
+  h1 {
+    font-size: 2.5rem; /* Réduire la taille du titre sur les petits écrans */
+  }
+  .text-lg {
+    font-size: 1rem; /* Ajuster la taille du texte des liens */
+  }
+}
+
+.container {
+  @apply max-w-7xl mx-auto px-4 py-6; /* Centrer le contenu et ajouter des marges */
+}
+
+/* Ajout d'un effet de survol sur les liens de navigation */
+nav a:hover {
+  @apply text-purple-300 transform scale-105; /* Changer la couleur et ajouter un effet de zoom */
+}
+
+/* Ajout d'un effet de transition sur le titre */
+h1 {
+  @apply transition-transform duration-500; /* Transition douce pour le titre */
+}
+
+/* Ajout d'un fond semi-transparent pour le header */
+header {
+  @apply bg-black/80; /* Augmenter la transparence pour un meilleur contraste */
+}
+
+/* Ajout d'un style pour les cartes de jeux */
+.game-card {
+  @apply bg-gray-800 rounded-lg shadow-lg p-4 transition-transform duration-300; /* Style de carte */
+}
+
+.game-card:hover {
+  @apply transform scale-105; /* Effet de zoom sur les cartes de jeux au survol */
 }
 </style>

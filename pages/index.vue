@@ -6,7 +6,7 @@
         <h1
           class="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-500 mb-6"
         >
-          Bienvenue sur L Game Store
+          Bienvenue sur L-Game Store
         </h1>
         <p class="text-xl text-gray-300 max-w-2xl mx-auto">
           Découvrez notre sélection de jeux vidéo et plongez dans des univers
@@ -15,7 +15,7 @@
       </div>
 
       <!-- Featured Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
         <!-- Card 1 -->
         <NuxtLink to="/mesjeux" class="group">
           <div
@@ -38,11 +38,11 @@
               </svg>
             </div>
             <h2 class="text-2xl font-semibold text-white mb-4 text-center">
-              Nos Jeux
+              Mes Jeux
             </h2>
             <p class="text-gray-300 text-center">
-              Explorez notre collection de jeux vidéo et trouvez votre prochaine
-              aventure.
+              Mes jeux vidéo développés avec amour et passion. Pour mieux
+              comprendre mon travail, vous pouvez aller sur la page "Mes Jeux".
             </p>
           </div>
         </NuxtLink>
@@ -110,9 +110,9 @@
 
       <!-- Featured Game -->
       <div
-        class="mt-16 bg-gray-800/30 rounded-lg p-8 border border-purple-500/20"
+        class="mt-16 bg-gray-800/30 rounded-lg p-4 md:p-8 border border-purple-500/20 relative z-10"
       >
-        <div class="flex flex-col md:flex-row items-center gap-8">
+        <div class="flex flex-col md:flex-row items-center gap-4 md:gap-8">
           <div class="flex-1">
             <h3 class="text-3xl font-bold text-white mb-4">Jeu à la Une</h3>
             <p class="text-gray-300 mb-6">
@@ -121,7 +121,7 @@
             </p>
             <NuxtLink
               to="/mesjeux"
-              class="inline-flex items-center px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 group"
+              class="inline-flex items-center px-4 py-2 md:px-6 md:py-3 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-all duration-300 group"
             >
               Découvrir
               <svg
@@ -187,5 +187,15 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+.video-background {
+  position: absolute; /* Positionnement absolu */
+  top: 0; /* Alignement en haut */
+  left: 0; /* Alignement à gauche */
+  width: 100%; /* Prend toute la largeur */
+  height: 100%; /* Prend toute la hauteur */
+  object-fit: cover; /* Couvre l'espace sans déformer */
+  z-index: -1; /* En arrière-plan */
 }
 </style>

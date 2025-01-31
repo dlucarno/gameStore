@@ -16,19 +16,33 @@ const personalInfo = {
   technologies: ["JavaScript", "Python", "Unity"],
   projects: [
     {
-      title: "Clone de The Legend of Zelda: TOTK",
+      title: "Jeu 8 Américains",
       description:
-        "Un projet pour m'exercer à la création de jeux vidéo, inspiré par The Legend of Zelda.",
+        "Recréation du jeu de cartes '8 Américains' en utilisant Lua et LÖVE 2D.",
+      link: "https://votre-jeu-8-americains.com", // Remplacez par le lien réel
     },
     {
-      title: "Clone de Cyberpunk 2077",
+      title: "Jeu Pong",
       description:
-        "Un projet pour apprendre à gérer des mondes ouverts, inspiré par Cyberpunk 2077.",
+        "Reprise du classique Pong en 2D, incluant un mode solo et multijoueur.",
+      link: "https://votre-jeu-pong.com", // Remplacez par le lien réel
+    },
+    {
+      title: "Jeu Tetris",
+      description:
+        "Recréation de Tetris avec des graphismes simples et un gameplay fluide.",
+      link: "https://votre-jeu-tetris.com", // Remplacez par le lien réel
+    },
+    {
+      title: "Jeu Snake",
+      description:
+        "Recréation du classique Snake, où le joueur contrôle un serpent.",
+      link: "https://votre-jeu-snake.com", // Remplacez par le lien réel
     },
   ],
   anecdotes: [
-    "Lors de la création de mon clone de Cyberpunk 2077, j'ai appris à gérer des systèmes de dialogue complexes.",
-    "En développant le clone de The Legend of Zelda, j'ai découvert l'importance de la conception de niveaux.",
+    "Lors de la création de mon clone de Pong, j'ai appris à gérer les collisions.",
+    "En développant le clone de Tetris, j'ai découvert l'importance de la mécanique de jeu.",
   ],
 };
 
@@ -56,33 +70,43 @@ const checkForThankYou = (message) => {
 
 const getGameInfo = (gameTitle) => {
   const gameInfo = {
-    "The Legend of Zelda: TOTK": {
+    "Jeu 8 Américains": {
       description:
-        "Je suis un clone de The Legend of Zelda: Tears of the Kingdom, un jeu d'action-aventure développé par Nintendo.",
-      features: ["Monde ouvert", "Création d'objets", "Exploration verticale"],
+        "Je suis un clone du jeu de cartes '8 Américains', un jeu amusant pour 2 à 7 joueurs.",
+      features: ["Jeu de cartes", "Règles classiques", "Interface intuitive"],
+      link: personalInfo.projects[0].link,
     },
-    "Cyberpunk 2077": {
+    "Jeu Pong": {
       description:
-        "Je suis un clone de Cyberpunk 2077, un RPG en monde ouvert se déroulant dans Night City.",
-      features: [
-        "Monde ouvert futuriste",
-        "Customisation du personnage",
-        "Histoire non linéaire",
-      ],
+        "Je suis un clone de Pong, un jeu d'arcade classique où les joueurs contrôlent des raquettes.",
+      features: ["Mode solo", "Mode multijoueur", "Gameplay classique"],
+      link: personalInfo.projects[1].link,
     },
-    "Elden Ring": {
+    "Jeu Tetris": {
       description:
-        "Je suis Elden Ring, un Action-RPG créé en collaboration entre FromSoftware et George R.R. Martin. Je propose un monde ouvert dark fantasy rempli de défis et de mystères.",
-      features: [
-        "Combat exigeant",
-        "Monde ouvert",
-        "Histoire cryptique",
-        "Boss épiques",
-        "Personnalisation poussée",
-      ],
+        "Je suis Tetris, un jeu de puzzle où les joueurs doivent empiler des blocs.",
+      features: ["Graphismes simples", "Gameplay fluide", "Système de score"],
+      link: personalInfo.projects[2].link,
+    },
+    "Jeu Snake": {
+      description:
+        "Je suis Snake, un jeu où le joueur contrôle un serpent qui grandit en mangeant des pommes.",
+      features: ["Contrôle du serpent", "Éviter les murs", "Gameplay addictif"],
+      link: personalInfo.projects[3].link,
     },
   };
   return gameInfo[gameTitle];
+};
+
+const getLinksResponse = (message) => {
+  if (message.toLowerCase().includes("lien github")) {
+    return "Voici mon GitHub : [Votre GitHub](https://github.com/votre-utilisateur)";
+  } else if (message.toLowerCase().includes("lien portfolio")) {
+    return "Voici mon portfolio : [Votre Portfolio](https://votre-portfolio.com)";
+  } else if (message.toLowerCase().includes("lien jeu")) {
+    return "Voici le lien vers le jeu : [Votre Jeu](https://votre-jeu.com)";
+  }
+  return null;
 };
 
 export default defineEventHandler(async (event) => {
@@ -116,6 +140,12 @@ export default defineEventHandler(async (event) => {
       return { reply };
     }
 
+    // Vérifiez si le message contient une demande de lien
+    const linkResponse = getLinksResponse(message);
+    if (linkResponse) {
+      return { reply: linkResponse };
+    }
+
     // Récupérer ou créer l'historique pour ce jeu
     if (!conversationHistory.has(gameId)) {
       conversationHistory.set(gameId, []);
@@ -134,11 +164,11 @@ Voici quelques informations sur le développeur :
 - Statut : ${personalInfo.education}
 - Technologies utilisées : ${personalInfo.technologies.join(", ")}
 - Projets développés : ${personalInfo.projects
-      .map((p) => `${p.title}: ${p.description}`)
+      .map((p) => `${p.title}: ${p.description} - [Voir le projet](${p.link})`)
       .join("\n")}
 - Anecdotes : ${personalInfo.anecdotes.join(" ")} 
 
-Important: Lorsque tu réponds, parle de moi et de mes projets. Mentionne que ces jeux sont des clones que j'ai développés pour m'exercer. Sois descriptif et engageant dans tes réponses, et n'hésite pas à partager des anecdotes ou des conseils sur le développement de jeux. Encourage les joueurs à poser des questions spécifiques sur mes projets ou mes expériences.
+Important: Lorsque tu réponds, parle comme si tu étais le jeu ${gameTitle}. Réponds en fonction de l'univers et des mécaniques de ce jeu. Sois descriptif et engageant dans tes réponses, et n'hésite pas à partager des anecdotes ou des conseils sur le développement de jeux. Encourage les joueurs à poser des questions spécifiques sur mes projets ou mes expériences.
 
 Joueur: ${message || "Présente-toi"}
 Jeu:`;
