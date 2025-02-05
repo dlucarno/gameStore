@@ -1,44 +1,73 @@
 <template>
   <div
-    class="min-h-screen flex transition-all duration-500"
-    :class="{ 'pr-[50vw]': selectedGame }"
+    class="h-screen overflow-hidden flex transition-all duration-500 bg-gradient-to-br from-gray-900 to-purple-900"
+    :class="{ 'lg:pr-[50vw]': selectedGame }"
   >
     <!-- Liste des jeux -->
-    <div class="container mx-auto px-4 py-8 transition-all duration-500">
-      <h1 class="text-3xl font-bold text-white mb-6">Mes Jeux</h1>
-      <div
-        class="grid gap-6"
-        :class="[
-          selectedGame
-            ? 'grid-cols-1'
-            : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3',
-        ]"
+    <div
+      class="container mx-auto px-4 py-4 md:py-8 transition-all duration-500 flex flex-col h-full relative z-10"
+    >
+      <h1
+        class="text-3xl md:text-4xl font-bold text-white mb-4 md:mb-8 relative flex-shrink-0"
       >
+        Mes Jeux
+        <span class="block h-1 w-20 bg-purple-500 mt-2 rounded-full"></span>
+      </h1>
+      <div class="games-container overflow-y-auto flex-1">
         <div
-          v-for="game in games"
-          :key="game.title"
-          class="bg-gray-800/50 rounded-lg overflow-hidden hover:bg-gray-700/50 transition-all duration-300 transform group"
+          class="grid gap-4 md:gap-6 pb-4 md:pb-8"
+          :class="[
+            selectedGame
+              ? 'grid-cols-1 md:grid-cols-2'
+              : 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4',
+          ]"
         >
-          <div class="p-4">
-            <h2 class="text-xl font-semibold text-white mb-2">
-              {{ game.title }}
-            </h2>
-            <p class="text-gray-300 mb-4">{{ game.description }}</p>
-            <div class="space-y-1 mb-4">
-              <p
-                v-for="(detail, index) in game.details"
-                :key="index"
-                class="text-gray-400 text-sm"
+          <div
+            v-for="game in games"
+            :key="game.title"
+            class="bg-gray-800/30 backdrop-blur-md rounded-xl overflow-hidden hover:bg-gray-700/40 transition-all duration-300 transform group hover:scale-[1.02] border border-purple-500/20 shadow-lg hover:shadow-purple-500/20"
+          >
+            <div class="p-6">
+              <h2
+                class="text-2xl font-semibold text-white mb-3 flex items-center gap-2"
               >
-                {{ detail }}
+                <span class="text-purple-400">🎮</span>
+                {{ game.title }}
+              </h2>
+              <p class="text-gray-300 mb-4 leading-relaxed">
+                {{ game.description }}
               </p>
+              <div class="space-y-2 mb-6">
+                <p
+                  v-for="(detail, index) in game.details"
+                  :key="index"
+                  class="text-gray-400 text-sm flex items-center gap-2 hover:text-purple-400 transition-colors"
+                >
+                  <span class="text-purple-500">{{
+                    detail.split(" ")[0]
+                  }}</span>
+                  {{ detail.split(" ").slice(1).join(" ") }}
+                </p>
+              </div>
+              <button
+                @click="selectGame(game)"
+                class="bg-purple-600 hover:bg-purple-500 text-white px-6 py-3 rounded-lg transition-all duration-300 w-full group-hover:scale-105 font-medium flex items-center justify-center gap-2 shadow-lg hover:shadow-purple-500/50"
+              >
+                En savoir plus
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-5 w-5"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z"
+                    clip-rule="evenodd"
+                  />
+                </svg>
+              </button>
             </div>
-            <button
-              @click="selectGame(game)"
-              class="bg-purple-600/80 hover:bg-purple-500 text-white px-4 py-2 rounded-lg transition-all duration-300 w-full group-hover:scale-105"
-            >
-              En savoir plus
-            </button>
           </div>
         </div>
       </div>
@@ -47,17 +76,25 @@
     <!-- Chat panel -->
     <div
       v-if="selectedGame"
-      class="fixed top-0 right-0 w-[50vw] h-full bg-gray-900/95 transform transition-all duration-500"
+      class="fixed inset-0 lg:inset-auto lg:top-0 lg:right-0 w-full lg:w-[50vw] h-screen bg-gray-900/95 backdrop-blur-xl transform transition-all duration-500 border-l border-purple-500/20 z-20"
       :class="selectedGame ? 'translate-x-0' : 'translate-x-full'"
     >
       <div class="h-full flex flex-col">
         <!-- En-tête du chat -->
-        <div class="p-4 border-b border-purple-500/30">
+        <div
+          class="p-4 md:p-6 border-b border-purple-500/30 backdrop-blur-md bg-gray-900/50"
+        >
           <div class="flex justify-between items-center">
-            <h3 class="text-xl font-bold text-white">
+            <h3
+              class="text-xl md:text-2xl font-bold text-white flex items-center gap-2 md:gap-3"
+            >
+              <span class="text-purple-400 text-2xl md:text-3xl">🎮</span>
               {{ selectedGame?.title }}
             </h3>
-            <button @click="closeChat" class="text-gray-400 hover:text-white">
+            <button
+              @click="closeChat"
+              class="text-gray-400 hover:text-white p-2 rounded-lg hover:bg-purple-500/20 transition-all"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 class="h-6 w-6"
@@ -77,53 +114,37 @@
         </div>
 
         <!-- Corps du chat -->
-        <div class="flex-1 overflow-y-auto p-4" ref="chatContainer">
+        <div class="flex-1 overflow-y-auto p-4 md:p-6" ref="chatContainer">
           <div
             v-for="(message, index) in messages"
             :key="index"
-            class="mb-3 p-2 rounded animate-fade-in"
-            :class="
+            class="mb-4 p-3 md:p-4 rounded-lg animate-fade-in max-w-[85%] text-sm md:text-base"
+            :class="[
               message.startsWith('Vous:')
-                ? 'bg-purple-600/20 text-white'
-                : 'bg-gray-800/50 text-gray-200'
-            "
+                ? 'bg-purple-600/20 text-white ml-auto'
+                : 'bg-gray-800/50 text-gray-200',
+            ]"
           >
             {{ message }}
-          </div>
-
-          <!-- Indicateur de chargement -->
-          <div
-            v-if="isLoading"
-            class="flex items-center space-x-2 p-2 bg-gray-800/50 rounded animate-pulse"
-          >
-            <div
-              class="w-2 h-2 bg-purple-500 rounded-full animate-bounce"
-            ></div>
-            <div
-              class="w-2 h-2 bg-purple-500 rounded-full animate-bounce"
-              style="animation-delay: 0.2s"
-            ></div>
-            <div
-              class="w-2 h-2 bg-purple-500 rounded-full animate-bounce"
-              style="animation-delay: 0.4s"
-            ></div>
           </div>
         </div>
 
         <!-- Input du chat -->
-        <div class="p-4 border-t border-purple-500/30">
-          <div class="flex gap-2">
+        <div
+          class="p-4 md:p-6 border-t border-purple-500/30 backdrop-blur-md bg-gray-900/50"
+        >
+          <div class="flex gap-2 md:gap-3">
             <input
               v-model="userInput"
               @keyup.enter="sendMessage"
               type="text"
               placeholder="Posez une question sur le jeu..."
-              class="flex-1 bg-gray-800/80 text-white rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-400"
+              class="flex-1 bg-gray-800/80 text-white rounded-lg px-3 md:px-4 py-2 md:py-3 text-sm md:text-base focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-400 border border-purple-500/20"
               :disabled="isLoading"
             />
             <button
               @click="sendMessage"
-              class="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+              class="bg-purple-600 hover:bg-purple-500 text-white px-4 md:px-6 py-2 md:py-3 rounded-lg transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 hover:shadow-lg hover:shadow-purple-500/30"
               :disabled="isLoading"
             >
               <svg
@@ -303,25 +324,27 @@ watch(() => messages.value.length, scrollToBottom);
   }
 }
 
-/* Smooth scrollbar for chat */
+/* Scrollbar personnalisée */
 .overflow-y-auto {
   scrollbar-width: thin;
   scrollbar-color: rgba(139, 92, 246, 0.5) rgba(17, 24, 39, 0.5);
 }
 
 .overflow-y-auto::-webkit-scrollbar {
-  width: 6px;
+  width: 4px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
   background: rgba(17, 24, 39, 0.5);
+  border-radius: 2px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
   background-color: rgba(139, 92, 246, 0.5);
-  border-radius: 3px;
+  border-radius: 2px;
 }
 
+/* Animations des points de chargement */
 .animate-bounce {
   animation: bounce 1s infinite;
 }
@@ -347,6 +370,65 @@ watch(() => messages.value.length, scrollToBottom);
   }
   50% {
     opacity: 0.5;
+  }
+}
+
+/* Media queries */
+@media (max-width: 768px) {
+  .container {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .games-container::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .text-3xl {
+    font-size: 1.5rem;
+  }
+
+  .p-6 {
+    padding: 1rem;
+  }
+
+  .gap-6 {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .p-4 {
+    padding: 0.75rem;
+  }
+}
+
+/* Ajustements pour les appareils en mode paysage */
+@media (max-height: 600px) and (orientation: landscape) {
+  .h-screen {
+    height: 100%;
+    min-height: 100vh;
+  }
+
+  .container {
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+}
+
+/* Optimisations pour les grands écrans */
+@media (min-width: 1536px) {
+  .container {
+    max-width: 1536px;
   }
 }
 </style>
