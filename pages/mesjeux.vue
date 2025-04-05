@@ -1,18 +1,22 @@
 <template>
   <div
-    class="h-screen overflow-hidden flex transition-all duration-500 bg-gradient-to-br from-gray-900 to-purple-900"
+    class="min-h-screen overflow-x-hidden flex transition-all duration-500 bg-gradient-to-br from-gray-900 to-purple-900"
     :class="{ 'lg:pr-[50vw]': selectedGame }"
   >
-    <!-- Liste des jeux -->
+    <!-- Liste des jeux avec animation d'entrée -->
     <div
       class="container mx-auto px-4 py-4 md:py-8 transition-all duration-500 flex flex-col h-full relative z-10"
     >
       <h1
-        class="text-3xl md:text-4xl font-bold text-white mb-4 md:mb-8 relative flex-shrink-0"
+        class="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-500 mb-4 md:mb-8 relative flex-shrink-0"
       >
         Mes Jeux
-        <span class="block h-1 w-20 bg-purple-500 mt-2 rounded-full"></span>
+        <span
+          class="block h-1 w-20 bg-gradient-to-r from-purple-400 to-pink-500 mt-2 rounded-full"
+        ></span>
       </h1>
+
+      <!-- Grille de jeux avec animations -->
       <div class="games-container overflow-y-auto flex-1">
         <div
           class="grid gap-4 md:gap-6 pb-4 md:pb-8"
@@ -23,9 +27,10 @@
           ]"
         >
           <div
-            v-for="game in games"
+            v-for="(game, index) in games"
             :key="game.title"
-            class="bg-gray-800/30 backdrop-blur-md rounded-xl overflow-hidden hover:bg-gray-700/40 transition-all duration-300 transform group hover:scale-[1.02] border border-purple-500/20 shadow-lg hover:shadow-purple-500/20"
+            class="game-card bg-gray-800/30 backdrop-blur-md rounded-xl overflow-hidden hover:bg-gray-700/40 transition-all duration-300 transform hover:scale-[1.02] border border-purple-500/20 shadow-lg hover:shadow-purple-500/20"
+            :style="{ animationDelay: `${index * 100}ms` }"
           >
             <div class="p-6">
               <h2
@@ -73,11 +78,14 @@
       </div>
     </div>
 
-    <!-- Chat panel -->
+    <!-- Panel de chat amélioré -->
     <div
       v-if="selectedGame"
       class="fixed inset-0 lg:inset-auto lg:top-0 lg:right-0 w-full lg:w-[50vw] h-screen bg-gray-900/95 backdrop-blur-xl transform transition-all duration-500 border-l border-purple-500/20 z-20"
-      :class="selectedGame ? 'translate-x-0' : 'translate-x-full'"
+      :class="[
+        selectedGame ? 'translate-x-0' : 'translate-x-full',
+        'animate-slide-in',
+      ]"
     >
       <div class="h-full flex flex-col">
         <!-- En-tête du chat -->
@@ -309,14 +317,16 @@ watch(() => messages.value.length, scrollToBottom);
 </script>
 
 <style scoped>
-.animate-fade-in {
-  animation: fadeIn 0.5s ease-out;
+/* Animations améliorées */
+.game-card {
+  animation: fadeInUp 0.6s ease-out forwards;
+  opacity: 0;
 }
 
-@keyframes fadeIn {
+@keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -324,53 +334,95 @@ watch(() => messages.value.length, scrollToBottom);
   }
 }
 
-/* Scrollbar personnalisée */
+.animate-slide-in {
+  animation: slideIn 0.5s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Effet de hover amélioré pour les cartes */
+.game-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.game-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px -5px rgba(139, 92, 246, 0.3);
+}
+
+/* Animation du gradient */
+.bg-gradient-to-r {
+  background-size: 200% 200%;
+  animation: gradientFlow 15s ease infinite;
+}
+
+@keyframes gradientFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Amélioration des transitions */
+.tech-item,
+button,
+input {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Animation des messages du chat */
+.message-enter-active {
+  animation: slideInBottom 0.3s ease-out;
+}
+
+@keyframes slideInBottom {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Scrollbar personnalisée plus élégante */
 .overflow-y-auto {
   scrollbar-width: thin;
-  scrollbar-color: rgba(139, 92, 246, 0.5) rgba(17, 24, 39, 0.5);
+  scrollbar-color: rgba(139, 92, 246, 0.5) rgba(17, 24, 39, 0.3);
 }
 
 .overflow-y-auto::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-track {
-  background: rgba(17, 24, 39, 0.5);
-  border-radius: 2px;
+  background: rgba(17, 24, 39, 0.3);
+  border-radius: 3px;
 }
 
 .overflow-y-auto::-webkit-scrollbar-thumb {
   background-color: rgba(139, 92, 246, 0.5);
-  border-radius: 2px;
+  border-radius: 3px;
+  transition: background-color 0.3s;
 }
 
-/* Animations des points de chargement */
-.animate-bounce {
-  animation: bounce 1s infinite;
-}
-
-@keyframes bounce {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-25%);
-  }
-}
-
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
-
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+.overflow-y-auto::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(139, 92, 246, 0.7);
 }
 
 /* Media queries */

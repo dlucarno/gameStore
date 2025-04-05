@@ -53,7 +53,7 @@
           <div class="tech-item">
             <div class="flex items-center gap-3">
               <img
-                src="https://nuxt.com/assets/design-kit/logo/icon-green.png"
+                src="https://nuxtjs.org/design-kit/colored-logo.svg"
                 alt="Nuxt"
                 class="w-6 h-6"
               />

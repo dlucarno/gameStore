@@ -100,9 +100,9 @@ const getGameInfo = (gameTitle) => {
 
 const getLinksResponse = (message) => {
   if (message.toLowerCase().includes("lien github")) {
-    return "Voici mon GitHub : [Votre GitHub](https://github.com/votre-utilisateur)";
+    return "Voici mon GitHub : [Votre GitHub](https://github.com/dlucarno)";
   } else if (message.toLowerCase().includes("lien portfolio")) {
-    return "Voici mon portfolio : [Votre Portfolio](https://votre-portfolio.com)";
+    return "Voici mon portfolio : [Votre Portfolio](https://www.dlucarno.com)";
   } else if (message.toLowerCase().includes("lien jeu")) {
     return "Voici le lien vers le jeu : [Votre Jeu](https://votre-jeu.com)";
   }

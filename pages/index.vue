@@ -22,8 +22,8 @@
         <p
           class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed animate-fade-in"
         >
-          Découvrez notre sélection de jeux vidéo et plongez dans des univers
-          extraordinaires.
+          Bienvenue sur mon portfolio de jeux vidéo, où je présente mes
+          reproductions de jeux développées pour perfectionner mes compétences.
         </p>
       </div>
 
